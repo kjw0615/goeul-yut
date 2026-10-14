@@ -1,0 +1,4 @@
+const {spawn}=require('node:child_process'),path=require('node:path');
+const url='http://127.0.0.1:4173';
+async function health(){try{const r=await fetch(url+'/health',{signal:AbortSignal.timeout(1000)});const d=await r.json();return d.game==='goeul-yut'&&d.version>=12&&d.multiplayer===true;}catch{return false}}
+(async()=>{if(!await health()){spawn(process.execPath,[path.join(__dirname,'server.cjs')],{cwd:__dirname,detached:true,stdio:'ignore',windowsHide:true}).unref();let ready=false;for(let i=0;i<30;i++){await new Promise(r=>setTimeout(r,100));if(await health()){ready=true;break;}}if(!ready){console.error('게임 서버를 열 수 없습니다. 기존 구버전 서버나 4173 포트 사용 여부를 확인해주세요.');process.exitCode=1;return;}}spawn('cmd.exe',['/c','start','',url],{stdio:'ignore',windowsHide:true}).unref();console.log('고을 윷판을 브라우저에서 열었습니다. '+url);})().catch(e=>{console.error(e.message);process.exitCode=1});

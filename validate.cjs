@@ -1,0 +1,10 @@
+const fs=require('node:fs'),path=require('node:path'),{execFileSync}=require('node:child_process');
+for(const file of ['dist/engine.js','dist/app.js','dist/lobby.js','dist/config.js','multiplayer.cjs','network-server.cjs','server.cjs','build.cjs'])execFileSync(process.execPath,['--check',file],{stdio:'inherit'});
+const {NODES,FILES,CARDS,deck,TOWNS}=require('./dist/engine.js');
+if(Object.keys(CARDS).length!==11||deck().length!==16||Object.keys(TOWNS).length!==20)throw Error('고을·복주머니 구성 불일치');
+if(fs.readdirSync('dist').some(name=>name.startsWith('__qa')))throw Error('검증용 임시 화면을 dist에서 제거해주세요.');
+if(NODES.length!==29||NODES.filter(n=>n.type==='property').length!==20)throw Error('보드 칸 수 불일치');
+const assets=['dist/index.html','dist/style.css','dist/lobby.js','dist/config.js','dist/assets/yut/yut-set.png',...['red','blue'].flatMap(c=>[1,2,3].map(t=>'dist/assets/buildings/'+c+'-'+t+'.png')), ...['stick-rounded','stick-flat','stick-flat-marked'].map(n=>'dist/assets/yut/'+n+'.png'),...FILES.map(n=>'dist/assets/characters/'+n+'.png')];
+for(const file of assets)if(!fs.existsSync(path.join(__dirname,file)))throw Error('필수 자산 없음: '+file);
+const app=fs.readFileSync('dist/app.js','utf8');if(app.includes('<span class="nid">'))throw Error('보드 위치값 노출');
+console.log('프런트엔드·게임 서버 검증 완료: 29칸, 고을20, 캐릭터12, 이미지·스크립트 정상');

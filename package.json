@@ -1,0 +1,16 @@
+{
+  "name": "goeul-yut",
+  "version": "0.12.0",
+  "private": true,
+  "description": "조선 고을을 경영하는 4인 2대2 윷 보드게임",
+  "scripts": {
+    "dev": "node server.cjs",
+    "start": "node server.cjs",
+    "test": "node rules.test.cjs",
+    "build": "node build.cjs",
+    "test:network": "node http.test.cjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

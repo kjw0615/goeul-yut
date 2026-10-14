@@ -1,0 +1,42 @@
+node_modules/
+.vercel/
+.openai/
+screenshots/
+*.zip
+*.log
+update-*.cjs
+
+
+dist/__qa*.html
+
+patch-*.cjs
+add-lobby-ui-*.cjs
+
+# Local settings, credentials and host metadata
+.env
+.env.*
+.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+.npmrc
+credentials*.json
+secrets*.json
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+coverage/
+.nyc_output/
+.local-history/
+preview-*.cjs
+tests/*preview*
+*.tmp
+*.bak
+*.tsbuildinfo
+
+GitHub-Vercel 배포 안내.md
+기획서.md
+사용 안내.md
+게임 시작.cmd
